@@ -507,3 +507,6 @@ build/
 
 # clang
 .clang-*
+
+# python venv
+venv/

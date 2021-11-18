@@ -13,10 +13,10 @@
 #include <pcl/surface/texture_mapping.h>
 #include <pcl/common/io.h> // for concatenateFields
 
-#include "read_cam_file.h"
 #include "stopwatch.h"
 
 //#define DEBUG_PRINT
+#include "read_cam_file_hololens2.h"
 
 // argv[1]: input mesh file
 // argv[2]: output obj file

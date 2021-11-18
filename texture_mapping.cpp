@@ -48,12 +48,12 @@
 #include <pcl/surface/texture_mapping.h>
 #include <pcl/common/io.h> // for concatenateFields
 
-#include "read_cam_file.h"
 #include "stopwatch.h"
 
 //#define DEBUG_PRINT
-//#define DEBUG_PLOT
+#include "read_cam_file.h"
 
+//#define DEBUG_PLOT
 #ifdef DEBUG_PLOT
 #include <pcl/visualization/pcl_visualizer.h>
 #endif
