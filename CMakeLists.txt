@@ -51,3 +51,10 @@ target_link_libraries(without_vtk
   pcl_search
   pcl_surface
 )
+
+add_executable(with_vtk with_vtk.cpp)
+
+target_link_libraries(with_vtk
+  ${PCL_LIBRARIES}
+  pcl_surface
+)

@@ -25,13 +25,13 @@ print(R)
 print("Trans from AT:")
 print(T)
 
-# inverse z
+# Unity forward to OpenGL forward: -z
 T *= np.array([1, 1, -1])
 print("Trans:")
 print(T)
 
 Euler = np.array([8.132, 1.279, 357.990]) * np.pi / 180
-# inverse direction
+# Unity LHC to OpenCV RHC: -alpha, -beta, +gamma
 Euler *= np.array([-1, -1, 1])
 print("Euler:")
 print(Euler)
@@ -52,8 +52,8 @@ z_rot = np.array([[math.cos(Euler[2]), -math.sin(Euler[2]), 0],
 
 # Z, X, Y => yaw-pitch-roll
 # extrinsic rotations
-print("ZXY: ")
-print(np.matmul(y_rot, np.matmul(x_rot, z_rot)))
+# print("ZXY: ")
+# print(np.matmul(y_rot, np.matmul(x_rot, z_rot)))
 
 # Y, X, Z
 # intrinsic rotations
@@ -62,14 +62,9 @@ print(np.matmul(y_rot, np.matmul(x_rot, z_rot)))
 # print("YXZ: ")
 # print(np.matmul(z_rot, np.matmul(x_rot, y_rot)))
 
-# b_rot = np.array([[1,  0,  0],
-#                   [0, -1,  0],
-#                   [0,  0, -1]])
-# print("R: ")
-# print(np.matmul(z_rot, np.matmul(x_rot, np.matmul(y_rot, b_rot))))
-
-R[0, 2] *= -1
-R[1, :] *= -1
-R[2, 0] *= -1
-print("R from Rot:")
-print(R)
+# rotate 180 along x-axis
+b_rot = np.array([[1,  0,  0],
+                  [0, -1,  0],
+                  [0,  0, -1]])
+print("R: ")
+print(np.matmul(z_rot, np.matmul(y_rot, np.matmul(x_rot, b_rot))))

@@ -91,10 +91,10 @@ cy = half_height + half_height * d
 fy = c * half_height
 
 // HoloLens CameraToWorld matrix
-m11 m12 m13 m14 //  r11  -r21  -r31   t1
-m21 m22 m23 m24 //  r12  -r22   r32   t2
-m31 m32 m33 m34 // -r13  -r23   r33  -t3
-m41 m42 m43 m44 //  0     0     0     1
+m11 m12 m13 m14 //  x  x  x  t1
+m21 m22 m23 m24 //  x  x  x  t2
+m31 m32 m33 m34 //  x  x  x -t3
+m41 m42 m43 m44 //  0  0  0  1
 ```
 
 ```sh
@@ -116,17 +116,22 @@ WorldEulers:
 (8.132, 1.279, 357.990)
 ```
 
+use Euler angles instead of CameraToWorld Matrix for rotation calculation:
+
+- Unity LHC to RHC: -alpha, -beta, +gamma
+- XYZ rotation requires rotating 180 degrees along x-axis first
+
 after transform:
 
 ```sh
- 0.01095  0.10689  0.16761  // t1, t2, t3
- 0.99903 -0.03472  0.02727  // r1
--0.03822 -0.98934 -0.14054  // r2
- 0.0221   0.14145 -0.9897   // r3
-1747.8723                   // fx
-1747.8248                   // fy
-1144.2814                   // cx
-605.8167                    // cy
-1278                        // height
-2272                        // width
+ 0.01095     0.10689    0.16761    // t1, t2, t3
+ 0.999136   -0.0378768  0.0171215  // r1
+-0.0350653  -0.989225  -0.142142   // r2
+ 0.0223209   0.141419  -0.989698   // r3
+1747.8723                          // fx
+1747.8248                          // fy
+1144.2814                          // cx
+605.8167                           // cy
+1278                               // height
+2272                               // width
 ```

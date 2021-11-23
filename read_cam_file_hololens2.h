@@ -117,13 +117,35 @@ bool read_cam_pose_file(std::string filename, pcl::TextureMapping<pcl::PointXYZ>
     cam.pose(3, 3) = val;
 
     // camera_to_world => world_to_camera
-    // FIXME: is this transformation correct?
-    cam.pose.linear() = cam.pose.linear().inverse();
-    cam.pose.linear()(0, 2) *= -1;
-    cam.pose.linear().row(1) *= -1;
-    cam.pose.linear()(2, 0) *= -1;
+    //cam.pose.linear() = cam.pose.linear().inverse();
+    //cam.pose.linear()(0, 2) *= -1;
+    //cam.pose.linear().row(1) *= -1;
+    //cam.pose.linear()(2, 0) *= -1;
 
     cam.pose.translation().z() *= -1;
+
+    char c_;
+    Eigen::Vector3f euler;
+    // world euler
+    go_to_line(myReadFile, 17);
+    myReadFile >> c_;
+    myReadFile >> val;
+    euler(0) = DEG2RAD(val);
+    myReadFile >> c_;
+    myReadFile >> val;
+    euler(1) = DEG2RAD(val);
+    myReadFile >> c_;
+    myReadFile >> val;
+    euler(2) = DEG2RAD(val);
+
+    Eigen::Matrix3f m;
+    auto x = Eigen::AngleAxisf(-euler(0), Eigen::Vector3f::UnitX());
+    auto y = Eigen::AngleAxisf(-euler(1), Eigen::Vector3f::UnitY());
+    auto z = Eigen::AngleAxisf(euler(2), Eigen::Vector3f::UnitZ());
+
+    // rotate 180 along x-axis
+    const Eigen::Matrix3f b_rot = (Eigen::Matrix3f() << 1, 0, 0, 0, -1, 0, 0, 0, -1).finished();
+    cam.pose.linear() = z * y * x * b_rot;
 
 #ifdef DEBUG_PRINT
     std::cout << cam.pose.matrix() << std::endl;
