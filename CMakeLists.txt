@@ -58,3 +58,26 @@ target_link_libraries(with_vtk
   ${PCL_LIBRARIES}
   pcl_surface
 )
+
+find_package(VTK COMPONENTS 
+  vtkCommonColor
+  vtkCommonCore
+  vtkCommonDataModel
+  vtkIOImport
+  vtkInteractionStyle
+  vtkRenderingContextOpenGL2
+  vtkRenderingCore
+  vtkRenderingFreeType
+  vtkRenderingGL2PSOpenGL2
+  vtkRenderingOpenGL2
+  QUIET
+)
+add_executable(display_obj_with_mtl display_obj_with_mtl.cpp)
+target_link_libraries(display_obj_with_mtl
+  PRIVATE ${VTK_LIBRARIES}
+  PRIVATE ${Boost_FILESYSTEM_LIBRARY}
+)
+vtk_module_autoinit(
+  TARGETS display_obj_with_mtl
+  MODULES ${VTK_LIBRARIES}
+)
