@@ -70,6 +70,9 @@ find_package(VTK COMPONENTS
   vtkRenderingFreeType
   vtkRenderingGL2PSOpenGL2
   vtkRenderingOpenGL2
+  vtkRenderingAnnotation
+  vtkInteractionWidgets
+  vtkFiltersSources
   QUIET
 )
 add_executable(display_obj_with_mtl display_obj_with_mtl.cpp)
@@ -79,5 +82,15 @@ target_link_libraries(display_obj_with_mtl
 )
 vtk_module_autoinit(
   TARGETS display_obj_with_mtl
+  MODULES ${VTK_LIBRARIES}
+)
+
+add_executable(display_obj_with_cam display_obj_with_cam.cpp)
+target_link_libraries(display_obj_with_cam
+  PRIVATE ${VTK_LIBRARIES}
+  PRIVATE ${Boost_FILESYSTEM_LIBRARY}
+)
+vtk_module_autoinit(
+  TARGETS display_obj_with_cam
   MODULES ${VTK_LIBRARIES}
 )
